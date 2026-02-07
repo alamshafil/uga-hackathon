@@ -79,7 +79,7 @@ export function SignUpForm({
             className="flex items-center gap-2 font-serif font-bold text-2xl mb-4 group"
           >
             <WalletCards className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
-            FinSight AI
+            FinSight
           </Link>
         </motion.div>
 

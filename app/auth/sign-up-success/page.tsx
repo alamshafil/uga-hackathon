@@ -15,7 +15,7 @@ export default function Page() {
               className="flex items-center gap-2 font-bold text-xl mb-4"
             >
               <WalletCards className="h-6 w-6 text-primary" />
-              FinSight AI
+              FinSight
             </Link>
           </div>
           <Card shadow="lg" className="border-none text-center p-4">
