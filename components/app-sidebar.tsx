@@ -66,7 +66,7 @@ export function AppSidebar() {
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="font-serif font-bold text-lg tracking-tight magic-gradient-text whitespace-nowrap"
+              className="font-serif font-bold text-lg tracking-tight whitespace-nowrap"
             >
               FinSight
             </motion.span>

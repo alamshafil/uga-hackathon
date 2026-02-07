@@ -26,6 +26,15 @@ const SPARKLE_COLORS = [
   "#fcd34d", // light gold
 ];
 
+// Seeded pseudo-random to avoid hydration mismatches
+function seededRandom(seed: number) {
+  let s = seed;
+  return () => {
+    s = (s * 16807 + 0) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
 export function useSparkleConfetti() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const idRef = useRef(0);
@@ -104,16 +113,37 @@ export function SparkleConfetti({ particles }: { particles: Particle[] }) {
   );
 }
 
-export function FloatingSparkles({ count = 6 }: { count?: number }) {
-  const sparkles = Array.from({ length: count }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    delay: Math.random() * 4,
-    duration: Math.random() * 3 + 2,
-    size: Math.random() * 12 + 6,
-    color: SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)],
-  }));
+interface SparkleData {
+  id: number;
+  left: string;
+  top: string;
+  delay: number;
+  duration: number;
+  size: number;
+  color: string;
+}
+
+export function FloatingSparkles({ count = 6, seed = 42 }: { count?: number; seed?: number }) {
+  const [mounted, setMounted] = useState(false);
+  const [sparkles, setSparkles] = useState<SparkleData[]>([]);
+
+  useEffect(() => {
+    const rand = seededRandom(seed);
+    setSparkles(
+      Array.from({ length: count }, (_, i) => ({
+        id: i,
+        left: `${rand() * 100}%`,
+        top: `${rand() * 100}%`,
+        delay: rand() * 4,
+        duration: rand() * 3 + 2,
+        size: rand() * 12 + 6,
+        color: SPARKLE_COLORS[Math.floor(rand() * SPARKLE_COLORS.length)],
+      }))
+    );
+    setMounted(true);
+  }, [count, seed]);
+
+  if (!mounted) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
