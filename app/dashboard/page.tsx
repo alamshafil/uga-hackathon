@@ -33,7 +33,7 @@ export default async function DashboardPage() {
         </div>
         
         <div className="grid gap-6 md:grid-cols-2">
-            <Card>
+            <Card className="hover:shadow-md transition-all hover:-translate-y-1 duration-300">
             <CardHeader>
                 <CardTitle className="font-serif text-2xl">User Profile</CardTitle>
                 <CardDescription>
@@ -60,7 +60,7 @@ export default async function DashboardPage() {
             </CardContent>
             </Card>
 
-            <Card>
+            <Card className="hover:shadow-md transition-all hover:-translate-y-1 duration-300">
                 <CardHeader>
                     <CardTitle className="font-serif text-2xl">Recent Activity</CardTitle>
                     <CardDescription>

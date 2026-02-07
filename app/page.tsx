@@ -33,7 +33,7 @@ export default function Home() {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-shadow">
+              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-all hover:-translate-y-1 duration-300">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <Brain className="h-6 w-6 text-primary" />
@@ -44,7 +44,7 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-shadow">
+              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-all hover:-translate-y-1 duration-300">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <TrendingUp className="h-6 w-6 text-primary" />
@@ -55,7 +55,7 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-shadow">
+              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-all hover:-translate-y-1 duration-300">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <Zap className="h-6 w-6 text-primary" />
@@ -66,7 +66,7 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-shadow">
+              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-all hover:-translate-y-1 duration-300">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <ShieldCheck className="h-6 w-6 text-primary" />
@@ -77,7 +77,7 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-shadow">
+              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-all hover:-translate-y-1 duration-300">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <PieChart className="h-6 w-6 text-primary" />
@@ -88,7 +88,7 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-shadow">
+              <Card className="bg-background/60 backdrop-blur border-none shadow-sm hover:shadow-md transition-all hover:-translate-y-1 duration-300">
                 <CardHeader>
                   <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                     <Sparkles className="h-6 w-6 text-primary" />
