@@ -1,5 +1,27 @@
-import { Navbar } from "@/components/navbar";
+import { SidebarProvider } from "@/components/sidebar-context";
+import { AppSidebar } from "@/components/app-sidebar";
+import { DashboardNavbar } from "@/components/dashboard-navbar";
+import { MobileNav } from "@/components/mobile-nav";
 import { Suspense } from "react";
+import { connection } from "next/server";
+
+async function DashboardShell({ children }: { children: React.ReactNode }) {
+  await connection();
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full">
+        <AppSidebar />
+        <div className="flex flex-1 flex-col w-full">
+          <DashboardNavbar />
+          <main className="flex-1 overflow-auto pb-20 md:pb-0">
+            {children}
+          </main>
+          <MobileNav />
+        </div>
+      </div>
+    </SidebarProvider>
+  );
+}
 
 export default function DashboardLayout({
   children,
@@ -7,13 +29,14 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Suspense fallback={<div className="h-16 w-full border-b" />}>
-        <Navbar />
-      </Suspense>
-      <main className="flex-1 w-full flex flex-col items-center">
-        {children}
-      </main>
-    </div>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="animate-pulse text-default-500">Loading...</div>
+        </div>
+      }
+    >
+      <DashboardShell>{children}</DashboardShell>
+    </Suspense>
   );
 }

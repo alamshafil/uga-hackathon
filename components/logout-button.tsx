@@ -1,24 +1,30 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export function LogoutButton() {
+export function LogoutButton({ className }: { className?: string }) {
   const router = useRouter();
 
   const logout = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.refresh(); // Refresh to update AuthButton state
+    router.refresh();
     router.push("/auth/login");
   };
 
   return (
-    <Button variant="outline" size="sm" onClick={logout} className="gap-2">
-      <LogOut className="h-4 w-4" />
-      <span>Logout</span>
+    <Button
+      variant="light"
+      size="sm"
+      onPress={logout}
+      className={cn("w-full justify-start text-danger hover:bg-danger-50", className)}
+      startContent={<LogOut className="h-4 w-4" />}
+    >
+      Logout
     </Button>
   );
 }

@@ -2,16 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card, CardBody, CardHeader, Input, Button } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -22,15 +13,13 @@ const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
+    transition: { staggerChildren: 0.1 },
+  },
 };
 
 const item = {
   hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0 }
+  show: { opacity: 1, y: 0 },
 };
 
 export function SignUpForm({
@@ -75,78 +64,86 @@ export function SignUpForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <motion.div 
+      <motion.div
         variants={container}
         initial="hidden"
         animate="show"
         className="flex flex-col gap-6"
       >
-        <motion.div variants={item} className="flex flex-col items-center gap-2 text-center">
-          <Link href="/" className="flex items-center gap-2 font-serif font-bold text-2xl mb-4 group">
+        <motion.div
+          variants={item}
+          className="flex flex-col items-center gap-2 text-center"
+        >
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-serif font-bold text-2xl mb-4 group"
+          >
             <WalletCards className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
             FinSight AI
           </Link>
         </motion.div>
 
         <motion.div variants={item}>
-          <Card className="border-none shadow-lg">
-            <CardHeader className="space-y-1">
-              <div className="flex items-center justify-between">
-                <CardTitle className="font-serif text-3xl font-bold tracking-tight">Create an account</CardTitle>
-                <Button asChild variant="ghost" size="sm" className="h-8 gap-1 text-muted-foreground hover:text-foreground">
-                  <Link href="/">
-                    <ArrowLeft className="h-4 w-4" />
-                    <span>Back</span>
-                  </Link>
+          <Card shadow="lg" className="border-none">
+            <CardHeader className="flex flex-col gap-1 pb-0">
+              <div className="flex items-center justify-between w-full">
+                <h2 className="font-serif text-3xl font-bold tracking-tight">
+                  Create an account
+                </h2>
+                <Button
+                  as={Link}
+                  href="/"
+                  variant="light"
+                  size="sm"
+                  startContent={<ArrowLeft className="h-4 w-4" />}
+                  className="text-default-500"
+                >
+                  Back
                 </Button>
               </div>
-              <CardDescription>
+              <p className="text-default-500 text-sm">
                 Enter your email and create a password to get started
-              </CardDescription>
+              </p>
             </CardHeader>
-            <CardContent>
+            <CardBody>
               <form onSubmit={handleSignUp} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="name@example.com"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="repeat-password">Confirm Password</Label>
-                  <Input
-                    id="repeat-password"
-                    type="password"
-                    required
-                    value={repeatPassword}
-                    onChange={(e) => setRepeatPassword(e.target.value)}
-                    disabled={isLoading}
-                  />
-                </div>
+                <Input
+                  label="Email"
+                  type="email"
+                  placeholder="name@example.com"
+                  isRequired
+                  value={email}
+                  onValueChange={setEmail}
+                  isDisabled={isLoading}
+                />
+                <Input
+                  label="Password"
+                  type="password"
+                  isRequired
+                  value={password}
+                  onValueChange={setPassword}
+                  isDisabled={isLoading}
+                />
+                <Input
+                  label="Confirm Password"
+                  type="password"
+                  isRequired
+                  value={repeatPassword}
+                  onValueChange={setRepeatPassword}
+                  isDisabled={isLoading}
+                />
                 {error && (
-                  <div className="p-3 text-sm bg-destructive/10 text-destructive rounded-md border border-destructive/20">
+                  <div className="p-3 text-sm bg-danger-50 text-danger rounded-lg border border-danger-200">
                     {error}
                   </div>
                 )}
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                <Button
+                  type="submit"
+                  color="primary"
+                  className="w-full"
+                  isLoading={isLoading}
+                  spinner={<Loader2 className="h-4 w-4 animate-spin" />}
+                >
                   {isLoading ? "Creating account..." : "Create Account"}
                 </Button>
                 <div className="text-center text-sm">
@@ -159,7 +156,7 @@ export function SignUpForm({
                   </Link>
                 </div>
               </form>
-            </CardContent>
+            </CardBody>
           </Card>
         </motion.div>
       </motion.div>

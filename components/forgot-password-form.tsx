@@ -2,16 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card, CardBody, CardHeader, Input, Button } from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Loader2, WalletCards, MailCheck, ArrowLeft } from "lucide-react";
@@ -21,15 +12,13 @@ const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
+    transition: { staggerChildren: 0.1 },
+  },
 };
 
 const item = {
   hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0 }
+  show: { opacity: 1, y: 0 },
 };
 
 export function ForgotPasswordForm({
@@ -62,78 +51,101 @@ export function ForgotPasswordForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <motion.div 
+      <motion.div
         variants={container}
         initial="hidden"
         animate="show"
         className="flex flex-col gap-6"
       >
-        <motion.div variants={item} className="flex flex-col items-center gap-2 text-center">
-          <Link href="/" className="flex items-center gap-2 font-serif font-bold text-2xl mb-4 group">
+        <motion.div
+          variants={item}
+          className="flex flex-col items-center gap-2 text-center"
+        >
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-serif font-bold text-2xl mb-4 group"
+          >
             <WalletCards className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
             FinSight AI
           </Link>
         </motion.div>
-        
+
         <motion.div variants={item}>
           {success ? (
-            <Card className="border-none shadow-lg text-center p-4">
-              <CardHeader>
-                <div className="mx-auto h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                   <MailCheck className="h-6 w-6 text-primary" />
+            <Card shadow="lg" className="border-none text-center p-4">
+              <CardHeader className="flex flex-col items-center gap-2">
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <MailCheck className="h-6 w-6 text-primary" />
                 </div>
-                <CardTitle className="font-serif text-3xl font-bold">Check Your Email</CardTitle>
-                <CardDescription>
-                  We&apos;ve sent password reset instructions to your email address.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-6">
-                  If you registered using your email and password, you will receive
-                  a password reset email shortly.
+                <h2 className="font-serif text-3xl font-bold">
+                  Check Your Email
+                </h2>
+                <p className="text-default-500 text-sm">
+                  We&apos;ve sent password reset instructions to your email
+                  address.
                 </p>
-                <Button asChild variant="outline" className="w-full">
-                    <Link href="/auth/login">Back to Login</Link>
+              </CardHeader>
+              <CardBody>
+                <p className="text-sm text-default-500 mb-6">
+                  If you registered using your email and password, you will
+                  receive a password reset email shortly.
+                </p>
+                <Button
+                  as={Link}
+                  href="/auth/login"
+                  variant="bordered"
+                  className="w-full"
+                >
+                  Back to Login
                 </Button>
-              </CardContent>
+              </CardBody>
             </Card>
           ) : (
-            <Card className="border-none shadow-lg">
-              <CardHeader className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="font-serif text-3xl font-bold tracking-tight">Reset Password</CardTitle>
-                  <Button asChild variant="ghost" size="sm" className="h-8 gap-1 text-muted-foreground hover:text-foreground">
-                    <Link href="/auth/login">
-                      <ArrowLeft className="h-4 w-4" />
-                      <span>Back</span>
-                    </Link>
+            <Card shadow="lg" className="border-none">
+              <CardHeader className="flex flex-col gap-1 pb-0">
+                <div className="flex items-center justify-between w-full">
+                  <h2 className="font-serif text-3xl font-bold tracking-tight">
+                    Reset Password
+                  </h2>
+                  <Button
+                    as={Link}
+                    href="/auth/login"
+                    variant="light"
+                    size="sm"
+                    startContent={<ArrowLeft className="h-4 w-4" />}
+                    className="text-default-500"
+                  >
+                    Back
                   </Button>
                 </div>
-                <CardDescription>
-                  Enter your email address and we&apos;ll send you a link to reset your password
-                </CardDescription>
+                <p className="text-default-500 text-sm">
+                  Enter your email address and we&apos;ll send you a link to
+                  reset your password
+                </p>
               </CardHeader>
-              <CardContent>
+              <CardBody>
                 <form onSubmit={handleForgotPassword} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="name@example.com"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      disabled={isLoading}
-                    />
-                  </div>
+                  <Input
+                    label="Email Address"
+                    type="email"
+                    placeholder="name@example.com"
+                    isRequired
+                    value={email}
+                    onValueChange={setEmail}
+                    isDisabled={isLoading}
+                  />
                   {error && (
-                    <div className="p-3 text-sm bg-destructive/10 text-destructive rounded-md border border-destructive/20">
+                    <div className="p-3 text-sm bg-danger-50 text-danger rounded-lg border border-danger-200">
                       {error}
                     </div>
                   )}
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  <Button
+                    type="submit"
+                    color="primary"
+                    className="w-full"
+                    isLoading={isLoading}
+                    spinner={<Loader2 className="h-4 w-4 animate-spin" />}
+                  >
                     {isLoading ? "Sending link..." : "Send Reset Link"}
                   </Button>
                   <div className="text-center text-sm">
@@ -146,7 +158,7 @@ export function ForgotPasswordForm({
                     </Link>
                   </div>
                 </form>
-              </CardContent>
+              </CardBody>
             </Card>
           )}
         </motion.div>
