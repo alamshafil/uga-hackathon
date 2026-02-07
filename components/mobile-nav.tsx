@@ -24,16 +24,16 @@ const navItems = [
     color: "text-emerald-500",
   },
   {
-    title: "AI Advice",
+    title: "Magic",
     href: "/dashboard/ai-advice",
     icon: Sparkles,
     color: "text-violet-500",
   },
   {
-    title: "AI Chat",
+    title: "Chat",
     href: "/dashboard/ai-chat",
     icon: MessageSquare,
-    color: "text-pink-500",
+    color: "text-fuchsia-500",
   },
 ];
 
@@ -54,14 +54,14 @@ export function MobileNav() {
               className={cn(
                 "flex flex-col items-center justify-center gap-1 min-w-[64px] rounded-lg py-1 transition-all duration-200",
                 isActive
-                  ? "text-primary font-medium"
+                  ? "text-violet-500 font-medium"
                   : "text-default-500 hover:text-foreground"
               )}
             >
               <div
                 className={cn(
                   "p-1.5 rounded-xl transition-colors",
-                  isActive ? "bg-primary/10" : "bg-transparent"
+                  isActive ? "bg-violet-500/10" : "bg-transparent"
                 )}
               >
                 <item.icon

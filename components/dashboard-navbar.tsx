@@ -75,7 +75,7 @@ export function DashboardNavbar() {
                 size="sm"
                 name={userInitial}
                 classNames={{
-                  base: "bg-gradient-to-br from-blue-500 to-cyan-500 text-white cursor-pointer",
+                  base: "bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white cursor-pointer",
                 }}
               />
             </DropdownTrigger>

@@ -7,7 +7,7 @@ import {
   ArrowLeftRight,
   Sparkles,
   MessageSquare,
-  WalletCards,
+  Wand2,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -15,6 +15,7 @@ import { Button, Tooltip, Divider } from "@heroui/react";
 import { useSidebar } from "@/components/sidebar-context";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { FloatingSparkles } from "@/components/magic-sparkles";
 
 const navItems = [
   {
@@ -30,16 +31,16 @@ const navItems = [
     color: "text-emerald-500",
   },
   {
-    title: "AI Advice",
+    title: "Magic Insights",
     href: "/dashboard/ai-advice",
     icon: Sparkles,
     color: "text-violet-500",
   },
   {
-    title: "AI Chat",
+    title: "Magic Chat",
     href: "/dashboard/ai-chat",
     icon: MessageSquare,
-    color: "text-pink-500",
+    color: "text-fuchsia-500",
   },
 ];
 
@@ -51,28 +52,30 @@ export function AppSidebar() {
     <motion.aside
       animate={{ width: isExpanded ? 240 : 64 }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="hidden md:flex flex-col h-screen sticky top-0 border-r border-divider bg-content1/50 backdrop-blur-lg overflow-hidden"
+      className="hidden md:flex flex-col h-screen sticky top-0 border-r border-divider bg-content1/50 backdrop-blur-lg overflow-hidden relative"
     >
+      {isExpanded && <FloatingSparkles count={4} />}
+
       {/* Header */}
-      <div className="flex items-center gap-2 px-4 h-14 border-b border-divider shrink-0">
+      <div className="flex items-center gap-2 px-4 h-14 border-b border-divider shrink-0 relative z-10">
         <Link href="/dashboard" className="flex items-center gap-2 min-w-0">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-md shadow-blue-500/20">
-            <WalletCards className="h-4 w-4" />
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-md shadow-violet-500/20 animate-magic-pulse">
+            <Wand2 className="h-4 w-4" />
           </div>
           {isExpanded && (
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="font-serif font-bold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent whitespace-nowrap"
+              className="font-serif font-bold text-lg tracking-tight magic-gradient-text whitespace-nowrap"
             >
-              FinSight AI
+              FinSight
             </motion.span>
           )}
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 py-3 px-2 space-y-1 overflow-y-auto">
+      <nav className="flex-1 py-3 px-2 space-y-1 overflow-y-auto relative z-10">
         <p className={cn(
           "text-xs uppercase tracking-wider text-default-400 mb-2 transition-all",
           isExpanded ? "px-2" : "text-center"
@@ -94,7 +97,7 @@ export function AppSidebar() {
                 "w-full justify-start transition-all duration-200 min-h-10",
                 isExpanded ? "px-3" : "px-0 justify-center min-w-10",
                 isActive
-                  ? "bg-primary/10 text-primary font-medium"
+                  ? "bg-violet-500/10 text-violet-600 dark:text-violet-400 font-medium magic-glow-sm"
                   : "text-default-600 hover:text-foreground"
               )}
               startContent={
@@ -102,7 +105,7 @@ export function AppSidebar() {
                   <item.icon
                     className={cn(
                       "h-4 w-4 shrink-0",
-                      isActive ? "text-primary" : item.color
+                      isActive ? "text-violet-500" : item.color
                     )}
                   />
                 ) : undefined
@@ -115,7 +118,7 @@ export function AppSidebar() {
                 <item.icon
                   className={cn(
                     "h-4 w-4",
-                    isActive ? "text-primary" : item.color
+                    isActive ? "text-violet-500" : item.color
                   )}
                 />
               )}
@@ -136,7 +139,7 @@ export function AppSidebar() {
 
       {/* Footer */}
       <Divider />
-      <div className="p-2 shrink-0">
+      <div className="p-2 shrink-0 relative z-10">
         <Button
           variant="light"
           size="sm"

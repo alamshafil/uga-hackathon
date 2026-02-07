@@ -1,5 +1,5 @@
 import { Hero } from "@/components/hero";
-import { WalletCards } from "lucide-react";
+import { Wand2 } from "lucide-react";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 import { AuthButton } from "@/components/auth-button";
@@ -27,12 +27,12 @@ async function HomeContent() {
 
         <footer className="w-full py-12 border-t border-divider mt-auto">
           <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2 font-serif font-bold">
-              <WalletCards className="h-5 w-5" />
-              <span>FinSight AI</span>
+            <div className="flex items-center gap-2 font-serif font-bold magic-gradient-text">
+              <Wand2 className="h-5 w-5 text-violet-500" />
+              <span>FinSight</span>
             </div>
             <p className="text-sm text-default-500">
-              &copy; 2026 FinSight AI. All rights reserved.
+              &copy; 2026 FinSight. All rights reserved.
             </p>
             <div className="flex gap-4 text-sm text-default-500">
               <Link

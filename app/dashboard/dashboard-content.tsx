@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { Card, CardBody, CardHeader, Chip, Tooltip } from "@heroui/react";
 import {
   LayoutDashboard,
@@ -9,10 +10,16 @@ import {
   PiggyBank,
   ArrowUpRight,
   ArrowDownRight,
+  Wand2,
 } from "lucide-react";
 import { SpendingCharts } from "./spending-charts";
 import { CATEGORY_COLORS } from "@/lib/types";
 import { format } from "date-fns";
+import {
+  useSparkleConfetti,
+  SparkleConfetti,
+  FloatingSparkles,
+} from "@/components/magic-sparkles";
 
 interface DashboardContentProps {
   userEmail: string;
@@ -34,6 +41,14 @@ interface DashboardContentProps {
 }
 
 export function DashboardContent({ userEmail, stats }: DashboardContentProps) {
+  const { particles, fire } = useSparkleConfetti();
+
+  // Fire confetti when user enters the dashboard
+  useEffect(() => {
+    const timeout = setTimeout(() => fire(), 400);
+    return () => clearTimeout(timeout);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const statCards = [
     {
       title: "Total Income",
@@ -88,10 +103,13 @@ export function DashboardContent({ userEmail, stats }: DashboardContentProps) {
   ];
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-6xl mx-auto w-full">
-      <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
-          <LayoutDashboard className="h-5 w-5" />
+    <div className="p-4 md:p-6 space-y-6 max-w-6xl mx-auto w-full relative">
+      <SparkleConfetti particles={particles} />
+      <FloatingSparkles count={8} />
+
+      <div className="flex items-center gap-3 relative z-10">
+        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white shadow-lg shadow-violet-500/25">
+          <Wand2 className="h-5 w-5" />
         </div>
         <div>
           <h1 className="font-serif text-2xl font-bold tracking-tight">

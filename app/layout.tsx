@@ -9,8 +9,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "FinSight AI App",
-  description: "A financial insights app built with Next.js, Supabase, and OpenAI.",
+  title: "FinSight - Financial Magic",
+  description: "A magical financial insights app. Wave your wand over your finances and conjure actionable insights.",
 };
 
 const instrumentSans = Instrument_Sans({

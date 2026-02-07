@@ -15,7 +15,7 @@ export default function AiChatLayout({
     <Suspense
       fallback={
         <div className="flex items-center justify-center h-full py-20 text-default-500">
-          Loading chat...
+          Summoning the oracle...
         </div>
       }
     >

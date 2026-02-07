@@ -14,14 +14,20 @@ import {
 import {
   MessageSquare,
   Send,
-  Loader2,
   Bot,
   User,
   Trash2,
   Sparkles,
+  Wand2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import {
+  useSparkleConfetti,
+  SparkleConfetti,
+  MagicLoadingSpinner,
+  FloatingSparkles,
+} from "@/components/magic-sparkles";
 
 const suggestions = [
   "How am I spending my money?",
@@ -39,6 +45,8 @@ export default function AiChatPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showSuggestions, setShowSuggestions] = useState(true);
   const isLoading = status === "streaming" || status === "submitted";
+  const prevStatusRef = useRef(status);
+  const { particles, fire } = useSparkleConfetti();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -49,6 +57,18 @@ export default function AiChatPage() {
   useEffect(() => {
     if (messages.length > 0) setShowSuggestions(false);
   }, [messages.length]);
+
+  // Fire sparkle confetti when AI finishes responding
+  useEffect(() => {
+    const wasLoading =
+      prevStatusRef.current === "streaming" ||
+      prevStatusRef.current === "submitted";
+    const isDone = status === "ready";
+    if (wasLoading && isDone && messages.length > 0) {
+      fire();
+    }
+    prevStatusRef.current = status;
+  }, [status, messages.length, fire]);
 
   const handleSend = () => {
     if (!input.trim() || isLoading) return;
@@ -70,18 +90,20 @@ export default function AiChatPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-3.5rem)] md:h-[calc(100vh-3.5rem)] max-w-4xl mx-auto w-full">
+      <SparkleConfetti particles={particles} />
+
       <div className="p-4 md:p-6 pb-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white shadow-lg shadow-pink-500/25">
-              <MessageSquare className="h-5 w-5" />
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-white shadow-lg shadow-violet-500/25 animate-magic-pulse">
+              <Wand2 className="h-5 w-5" />
             </div>
             <div>
               <h1 className="font-serif text-2xl font-bold tracking-tight">
-                AI Chat
+                Magic Chat
               </h1>
               <p className="text-sm text-default-500">
-                Ask about your finances
+                Ask the magic oracle about your finances
               </p>
             </div>
           </div>
@@ -90,6 +112,7 @@ export default function AiChatPage() {
               <Button
                 isIconOnly
                 variant="bordered"
+                className="border-violet-500/30"
                 onPress={() => {
                   setMessages([]);
                   setShowSuggestions(true);
@@ -108,18 +131,19 @@ export default function AiChatPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col items-center justify-center h-full py-20"
+              className="flex flex-col items-center justify-center h-full py-20 relative"
             >
-              <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 flex items-center justify-center mb-4">
-                <Sparkles className="h-8 w-8 text-pink-500" />
+              <FloatingSparkles count={6} />
+              <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center mb-4 animate-float relative z-10">
+                <Sparkles className="h-8 w-8 text-violet-500 animate-twinkle" />
               </div>
-              <h2 className="font-serif text-lg font-bold mb-1">
-                What would you like to know?
+              <h2 className="font-serif text-lg font-bold mb-1 relative z-10">
+                What spell shall I cast?
               </h2>
-              <p className="text-sm text-default-500 mb-6">
-                Ask me anything about your finances
+              <p className="text-sm text-default-500 mb-6 relative z-10">
+                Ask the magic oracle anything about your finances
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-lg">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-lg relative z-10">
                 {suggestions.map((s, i) => (
                   <motion.button
                     key={s}
@@ -130,9 +154,11 @@ export default function AiChatPage() {
                       setShowSuggestions(false);
                       sendMessage({ text: s });
                     }}
-                    className="text-left p-3 rounded-xl border border-divider bg-content1 hover:bg-default-100 transition-all duration-200 hover:shadow-sm text-sm"
+                    className="text-left p-3 rounded-xl border border-violet-500/20 bg-content1 hover:bg-violet-500/5 transition-all duration-200 hover:shadow-sm hover:border-violet-500/40 text-sm group"
                   >
-                    {s}
+                    <span className="group-hover:magic-gradient-text transition-all">
+                      {s}
+                    </span>
                   </motion.button>
                 ))}
               </div>
@@ -158,17 +184,17 @@ export default function AiChatPage() {
                     <Avatar
                       size="sm"
                       classNames={{
-                        base: "bg-gradient-to-br from-pink-500 to-rose-600 text-white shrink-0",
+                        base: "bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white shrink-0",
                       }}
-                      icon={<Bot className="h-4 w-4" />}
+                      icon={<Wand2 className="h-4 w-4" />}
                     />
                   )}
                   <Card
                     className={cn(
                       "max-w-[80%] px-4 py-3 shadow-sm",
                       message.role === "user"
-                        ? "bg-primary text-primary-foreground rounded-2xl rounded-br-md"
-                        : "bg-content1 rounded-2xl rounded-bl-md"
+                        ? "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-2xl rounded-br-md"
+                        : "bg-content1 rounded-2xl rounded-bl-md border border-violet-500/10"
                     )}
                   >
                     <div
@@ -187,7 +213,7 @@ export default function AiChatPage() {
                     <Avatar
                       size="sm"
                       classNames={{
-                        base: "bg-gradient-to-br from-blue-500 to-cyan-500 text-white shrink-0",
+                        base: "bg-gradient-to-br from-amber-400 to-orange-500 text-white shrink-0",
                       }}
                       icon={<User className="h-4 w-4" />}
                     />
@@ -208,15 +234,12 @@ export default function AiChatPage() {
                 <Avatar
                   size="sm"
                   classNames={{
-                    base: "bg-gradient-to-br from-pink-500 to-rose-600 text-white shrink-0",
+                    base: "bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white shrink-0",
                   }}
-                  icon={<Bot className="h-4 w-4" />}
+                  icon={<Wand2 className="h-4 w-4" />}
                 />
-                <Card className="px-4 py-3 bg-content1 rounded-2xl rounded-bl-md">
-                  <div className="flex items-center gap-2 text-sm text-default-500">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Thinking...
-                  </div>
+                <Card className="px-4 py-3 bg-content1 rounded-2xl rounded-bl-md border border-violet-500/10">
+                  <MagicLoadingSpinner />
                 </Card>
               </motion.div>
             )}
@@ -229,20 +252,20 @@ export default function AiChatPage() {
             value={input}
             onValueChange={setInput}
             onKeyDown={handleKeyDown}
-            placeholder="Ask about your finances..."
+            placeholder="Ask the magic oracle..."
             minRows={1}
             maxRows={4}
             className="flex-1"
             classNames={{
-              inputWrapper: "rounded-xl",
+              inputWrapper: "rounded-xl border-violet-500/20",
             }}
           />
-          <Tooltip content="Send message">
+          <Tooltip content="Cast spell">
             <Button
               isIconOnly
               onPress={handleSend}
               isDisabled={isLoading || !input.trim()}
-              className="shrink-0 h-11 w-11 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-lg shadow-pink-500/25"
+              className="shrink-0 h-11 w-11 rounded-xl magic-gradient-bg text-white shadow-lg shadow-violet-500/25"
             >
               <Send className="h-4 w-4" />
             </Button>
