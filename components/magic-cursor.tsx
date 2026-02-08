@@ -47,9 +47,9 @@ export function MagicCursor() {
   }, []);
 
   useEffect(() => {
-    // Hide on touch devices
-    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
+    // Hide on pure touch devices (no mouse/trackpad)
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+    if (!hasFinePointer) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
