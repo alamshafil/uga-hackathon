@@ -34,7 +34,7 @@ async function HomeContent() {
             <p className="text-sm text-default-500">
               &copy; 2026 FinSight. All rights reserved.
             </p>
-            <div className="flex gap-4 text-sm text-default-500">
+            {/* <div className="flex gap-4 text-sm text-default-500">
               <Link
                 href="#"
                 className="hover:text-foreground transition-colors"
@@ -47,7 +47,7 @@ async function HomeContent() {
               >
                 Terms
               </Link>
-            </div>
+            </div> */}
           </div>
         </footer>
       </main>

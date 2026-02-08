@@ -36,12 +36,12 @@ const navItems = [
     icon: Sparkles,
     color: "text-violet-500",
   },
-  {
-    title: "Magic Chat",
-    href: "/dashboard/ai-chat",
-    icon: MessageSquare,
-    color: "text-fuchsia-500",
-  },
+  // {
+  //   title: "Magic Chat",
+  //   href: "/dashboard/ai-chat",
+  //   icon: MessageSquare,
+  //   color: "text-fuchsia-500",
+  // },
 ];
 
 export function AppSidebar() {

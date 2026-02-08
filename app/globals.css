@@ -20,6 +20,13 @@
   }
 }
 
+/* Hide native cursor everywhere - custom animated cursor replaces it */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
 @layer utilities {
   .gradient-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500;
