@@ -139,7 +139,7 @@ export function TransactionTable({
                   className={`text-right font-mono font-medium ${t.category === "Income" ? "text-emerald-500" : "text-foreground"}`}
                 >
                   {t.category === "Income" ? "+" : "-"}$
-                  {Math.abs(Number(t.amount)).toFixed(2)}
+                  {Math.abs(Number(t.amount)).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </TableCell>
                 <TableCell>
                   <Tooltip content="Delete">

@@ -128,7 +128,7 @@ export function SpendingCharts({
                     </Pie>
                     <RechartsTooltip
                       formatter={(value: number) => [
-                        `$${value.toFixed(2)} (${((value / total) * 100).toFixed(1)}%)`,
+                        `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (${((value / total) * 100).toFixed(1)}%)`,
                         "Amount",
                       ]}
                       contentStyle={tooltipStyle}
@@ -163,12 +163,12 @@ export function SpendingCharts({
                     <YAxis
                       fontSize={11}
                       tickLine={false}
-                      tickFormatter={(v) => `$${v}`}
+                      tickFormatter={(v) => `$${v.toLocaleString()}`}
                       stroke={axisColor}
                     />
                     <RechartsTooltip
                       formatter={(value: number) => [
-                        `$${value.toFixed(2)}`,
+                        `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
                         "Amount",
                       ]}
                       contentStyle={tooltipStyle}
@@ -204,12 +204,12 @@ export function SpendingCharts({
                       <YAxis
                         fontSize={11}
                         tickLine={false}
-                        tickFormatter={(v) => `$${v}`}
+                        tickFormatter={(v) => `$${v.toLocaleString()}`}
                         stroke={axisColor}
                       />
                       <RechartsTooltip
                         formatter={(value: number) => [
-                          `$${value.toFixed(2)}`,
+                          `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
                           "Spending",
                         ]}
                         contentStyle={tooltipStyle}

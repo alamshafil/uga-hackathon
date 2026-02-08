@@ -53,7 +53,7 @@ export function DashboardContent({ userEmail, stats }: DashboardContentProps) {
     {
       title: "Total Income",
       tooltip: "Sum of all income transactions",
-      value: `$${stats.totalIncome.toFixed(2)}`,
+      value: `$${stats.totalIncome.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: TrendingUp,
       iconColor: "text-emerald-500",
       bgGradient:
@@ -64,7 +64,7 @@ export function DashboardContent({ userEmail, stats }: DashboardContentProps) {
     {
       title: "Total Spent",
       tooltip: "Sum of all expense transactions",
-      value: `$${stats.totalSpent.toFixed(2)}`,
+      value: `$${stats.totalSpent.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: TrendingDown,
       iconColor: "text-red-500",
       bgGradient:
@@ -75,7 +75,7 @@ export function DashboardContent({ userEmail, stats }: DashboardContentProps) {
     {
       title: "Net Savings",
       tooltip: "Income minus expenses",
-      value: `$${stats.netSavings.toFixed(2)}`,
+      value: `$${stats.netSavings.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       icon: PiggyBank,
       iconColor:
         stats.netSavings >= 0 ? "text-blue-500" : "text-orange-500",
@@ -187,7 +187,7 @@ export function DashboardContent({ userEmail, stats }: DashboardContentProps) {
                         <div className="flex items-center justify-between text-sm">
                           <span className="font-medium">{category}</span>
                           <span className="text-default-500">
-                            ${amount.toFixed(0)} ({percent}%)
+                            ${amount.toLocaleString("en-US", { maximumFractionDigits: 0 })} ({percent}%)
                           </span>
                         </div>
                         <div className="h-2 rounded-full bg-default-100 overflow-hidden">
@@ -262,7 +262,7 @@ export function DashboardContent({ userEmail, stats }: DashboardContentProps) {
                       }}
                     >
                       {t.category === "Income" ? "+" : "-"}$
-                      {Math.abs(Number(t.amount)).toFixed(2)}
+                      {Math.abs(Number(t.amount)).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </Chip>
                   </div>
                 ))}
