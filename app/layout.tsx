@@ -11,6 +11,27 @@ export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "FinSight - Financial Magic",
   description: "A magical financial insights app. Wave your wand over your finances and conjure actionable insights.",
+  openGraph: {
+    title: "FinSight - Financial Magic",
+    description: "Wave your wand over your finances and conjure actionable insights.",
+    url: defaultUrl,
+    siteName: "FinSight",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 720,
+        alt: "FinSight - Financial Magic",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FinSight - Financial Magic",
+    description: "Wave your wand over your finances and conjure actionable insights.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 const instrumentSans = Instrument_Sans({
