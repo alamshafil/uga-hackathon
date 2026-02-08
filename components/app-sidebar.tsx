@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
   ArrowLeftRight,
@@ -10,12 +12,16 @@ import {
   Wand2,
   ChevronLeft,
   ChevronRight,
+  Home,
+  LogOut,
 } from "lucide-react";
-import { Button, Tooltip, Divider } from "@heroui/react";
+import { Button, Tooltip, Divider, Avatar } from "@heroui/react";
 import { useSidebar } from "@/components/sidebar-context";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { FloatingSparkles } from "@/components/magic-sparkles";
+import { useRouter } from "next/navigation";
 
 const navItems = [
   {
@@ -46,7 +52,26 @@ const navItems = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { isExpanded, toggle } = useSidebar();
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getClaims().then(({ data }) => {
+      const email = data?.claims?.email as string | undefined;
+      setUserEmail(email || null);
+    });
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.refresh();
+    router.push("/auth/login");
+  };
+
+  const userInitial = userEmail?.charAt(0).toUpperCase() || "U";
 
   return (
     <motion.aside
@@ -76,12 +101,6 @@ export function AppSidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 py-3 px-2 space-y-1 overflow-y-auto relative z-10">
-        <p className={cn(
-          "text-xs uppercase tracking-wider text-default-400 mb-2 transition-all",
-          isExpanded ? "px-2" : "text-center"
-        )}>
-          {isExpanded ? "Navigation" : ""}
-        </p>
         {navItems.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -137,25 +156,129 @@ export function AppSidebar() {
         })}
       </nav>
 
-      {/* Footer */}
-      <Divider />
-      <div className="p-2 shrink-0 relative z-10">
-        <Button
-          variant="light"
-          size="sm"
-          onPress={toggle}
-          className="w-full text-default-500 hover:text-foreground"
-          isIconOnly={!isExpanded}
-        >
+      {/* Bottom section */}
+      <div className="shrink-0 relative z-10">
+        <Divider />
+
+        {/* Home & Theme */}
+        <div className={cn(
+          "px-2 py-2 space-y-1",
+          !isExpanded && "flex flex-col items-center space-y-1"
+        )}>
           {isExpanded ? (
-            <>
-              <ChevronLeft className="h-4 w-4 mr-2" />
-              <span>Collapse</span>
-            </>
+            <Button
+              as={Link}
+              href="/"
+              variant="light"
+              size="sm"
+              className="w-full justify-start text-default-500 hover:text-foreground"
+              startContent={<Home className="h-4 w-4" />}
+            >
+              Home
+            </Button>
           ) : (
-            <ChevronRight className="h-4 w-4" />
+            <Tooltip content="Home" placement="right">
+              <Button
+                as={Link}
+                href="/"
+                variant="light"
+                size="sm"
+                isIconOnly
+                className="text-default-500 hover:text-foreground"
+              >
+                <Home className="h-4 w-4" />
+              </Button>
+            </Tooltip>
           )}
-        </Button>
+
+          {isExpanded ? (
+            <div className="flex items-center justify-between px-3 py-1">
+              <span className="text-sm text-default-500">Theme</span>
+              <ThemeSwitcher />
+            </div>
+          ) : (
+            <Tooltip content="Theme" placement="right">
+              <div>
+                <ThemeSwitcher />
+              </div>
+            </Tooltip>
+          )}
+        </div>
+
+        <Divider />
+
+        {/* User card */}
+        <div className={cn(
+          "p-2",
+          !isExpanded && "flex flex-col items-center"
+        )}>
+          {isExpanded ? (
+            <div className="flex items-center gap-3 px-2 py-2">
+              <Avatar
+                size="sm"
+                name={userInitial}
+                classNames={{
+                  base: "bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shrink-0",
+                }}
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">
+                  {userEmail?.split("@")[0] || "User"}
+                </p>
+                <p className="text-xs text-default-400 truncate">
+                  {userEmail || "Loading..."}
+                </p>
+              </div>
+              <Tooltip content="Logout" placement="top">
+                <Button
+                  isIconOnly
+                  variant="light"
+                  size="sm"
+                  onPress={handleLogout}
+                  className="text-default-400 hover:text-danger shrink-0"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </Tooltip>
+            </div>
+          ) : (
+            <Tooltip content={userEmail || "User"} placement="right">
+              <Avatar
+                as="button"
+                size="sm"
+                name={userInitial}
+                classNames={{
+                  base: "bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white",
+                }}
+              />
+            </Tooltip>
+          )}
+        </div>
+
+        <Divider />
+
+        {/* Collapse toggle */}
+        <div className={cn(
+          "p-2",
+          !isExpanded && "flex justify-center"
+        )}>
+          <Button
+            variant="light"
+            size="sm"
+            onPress={toggle}
+            className="w-full text-default-500 hover:text-foreground"
+            isIconOnly={!isExpanded}
+          >
+            {isExpanded ? (
+              <>
+                <ChevronLeft className="h-4 w-4 mr-2" />
+                <span>Collapse</span>
+              </>
+            ) : (
+              <ChevronRight className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
       </div>
     </motion.aside>
   );

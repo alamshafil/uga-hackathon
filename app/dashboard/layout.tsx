@@ -1,6 +1,5 @@
 import { SidebarProvider } from "@/components/sidebar-context";
 import { AppSidebar } from "@/components/app-sidebar";
-import { DashboardNavbar } from "@/components/dashboard-navbar";
 import { MobileNav } from "@/components/mobile-nav";
 import { Suspense } from "react";
 import { connection } from "next/server";
@@ -12,7 +11,6 @@ async function DashboardShell({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <div className="flex flex-1 flex-col w-full">
-          <DashboardNavbar />
           <main className="flex-1 overflow-auto pb-20 md:pb-0">
             {children}
           </main>
