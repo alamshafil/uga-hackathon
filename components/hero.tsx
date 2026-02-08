@@ -74,8 +74,6 @@ export function Hero({ user }: HeroProps) {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
-              animate={{ y: [0, -4, 0] }}
-              transition={{ y: { duration: 2, repeat: Infinity, ease: "easeInOut" } }}
             >
               <Button
                 as={Link}
@@ -90,26 +88,37 @@ export function Hero({ user }: HeroProps) {
             </motion.div>
           ) : (
             <>
-              <Button
-                as={Link}
-                href="/auth/sign-up"
-                size="lg"
-                radius="lg"
-                className="magic-gradient-bg text-white shadow-lg shadow-violet-500/25 magic-glow w-full sm:w-auto"
-                startContent={<Wand2 className="h-5 w-5" />}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
               >
-                Get Started
-              </Button>
-              <Button
-                as={Link}
-                href="/auth/login"
-                variant="bordered"
-                size="lg"
-                radius="lg"
-                className="border-violet-500/30 text-violet-600 dark:text-violet-400 hover:bg-violet-500/10 w-full sm:w-auto"
+                <Button
+                  as={Link}
+                  href="/auth/sign-up"
+                  size="lg"
+                  radius="lg"
+                  className="magic-gradient-bg text-white shadow-lg shadow-violet-500/25 magic-glow w-full sm:w-auto animate-magic-pulse"
+                  startContent={<Wand2 className="h-5 w-5 animate-wand-wave" />}
+                >
+                  Get Started
+                </Button>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
               >
-                Login
-              </Button>
+                <Button
+                  as={Link}
+                  href="/auth/login"
+                  variant="bordered"
+                  size="lg"
+                  radius="lg"
+                  className="border-violet-500/30 text-violet-600 dark:text-violet-400 hover:bg-violet-500/10 w-full sm:w-auto"
+                  startContent={<Sparkles className="h-4 w-4 animate-twinkle" />}
+                >
+                  Login
+                </Button>
+              </motion.div>
             </>
           )}
         </motion.div>

@@ -6,7 +6,7 @@ import { Card, CardBody, CardHeader, Input, Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
-import { Loader2, WalletCards, ShieldEllipsis, ArrowLeft } from "lucide-react";
+import { Loader2, Wand2, Sparkles, ShieldCheck, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
 const container = {
@@ -72,18 +72,27 @@ export function UpdatePasswordForm({
             href="/"
             className="flex items-center gap-2 font-serif font-bold text-2xl mb-4 group"
           >
-            <WalletCards className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
+            <motion.span
+              animate={{ rotate: [0, 15, -5, 10, 0], scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Wand2 className="h-8 w-8 text-violet-500 transition-transform group-hover:scale-110" />
+            </motion.span>
             FinSight
           </Link>
         </motion.div>
 
         <motion.div variants={item}>
-          <Card shadow="lg" className="border-none">
-            <CardHeader className="flex flex-col gap-1 pb-0">
+          <Card shadow="lg" className="border-none border border-violet-500/10">
+            <CardHeader className="flex flex-col gap-1 px-6 pt-6 pb-0">
               <div className="flex items-center justify-between w-full mb-2">
-                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <ShieldEllipsis className="h-5 w-5 text-primary" />
-                </div>
+                <motion.div
+                  className="h-10 w-10 rounded-full bg-violet-500/10 flex items-center justify-center"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <ShieldCheck className="h-5 w-5 text-violet-500" />
+                </motion.div>
                 <Button
                   as={Link}
                   href="/dashboard"
@@ -95,19 +104,22 @@ export function UpdatePasswordForm({
                   Dashboard
                 </Button>
               </div>
-              <h2 className="font-serif text-3xl font-bold tracking-tight">
-                New Password
-              </h2>
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-violet-500 animate-twinkle" />
+                <h2 className="font-serif text-3xl font-bold tracking-tight">
+                  New Password
+                </h2>
+              </div>
               <p className="text-default-500 text-sm">
-                Please enter and confirm your new password below
+                Choose a new magical passphrase to protect your portal
               </p>
             </CardHeader>
-            <CardBody>
+            <CardBody className="px-6 pb-6">
               <form onSubmit={handleUpdatePassword} className="space-y-4">
                 <Input
                   label="New Password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="Enter new password"
                   isRequired
                   value={password}
                   onValueChange={setPassword}
@@ -116,7 +128,7 @@ export function UpdatePasswordForm({
                 <Input
                   label="Confirm New Password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="Confirm new password"
                   isRequired
                   value={confirmPassword}
                   onValueChange={setConfirmPassword}
@@ -127,15 +139,25 @@ export function UpdatePasswordForm({
                     {error}
                   </div>
                 )}
-                <Button
-                  type="submit"
-                  color="primary"
-                  className="w-full"
-                  isLoading={isLoading}
-                  spinner={<Loader2 className="h-4 w-4 animate-spin" />}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  {isLoading ? "Updating..." : "Update Password"}
-                </Button>
+                  <Button
+                    type="submit"
+                    className="w-full magic-gradient-bg text-white magic-glow-sm"
+                    size="lg"
+                    isLoading={isLoading}
+                    spinner={<Loader2 className="h-4 w-4 animate-spin" />}
+                    startContent={
+                      !isLoading ? (
+                        <Wand2 className="h-4 w-4" />
+                      ) : undefined
+                    }
+                  >
+                    {isLoading ? "Enchanting..." : "Update Password"}
+                  </Button>
+                </motion.div>
               </form>
             </CardBody>
           </Card>

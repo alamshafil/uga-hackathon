@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Card, CardBody, CardHeader, Input, Button } from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
-import { Loader2, WalletCards, MailCheck, ArrowLeft } from "lucide-react";
+import { Loader2, Wand2, Sparkles, MailCheck, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
 const container = {
@@ -65,48 +65,66 @@ export function ForgotPasswordForm({
             href="/"
             className="flex items-center gap-2 font-serif font-bold text-2xl mb-4 group"
           >
-            <WalletCards className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
+            <motion.span
+              animate={{ rotate: [0, 15, -5, 10, 0], scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Wand2 className="h-8 w-8 text-violet-500 transition-transform group-hover:scale-110" />
+            </motion.span>
             FinSight
           </Link>
         </motion.div>
 
         <motion.div variants={item}>
           {success ? (
-            <Card shadow="lg" className="border-none text-center p-4">
+            <Card shadow="lg" className="border-none text-center p-6">
               <CardHeader className="flex flex-col items-center gap-2">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <MailCheck className="h-6 w-6 text-primary" />
-                </div>
+                <motion.div
+                  className="h-14 w-14 rounded-full bg-violet-500/10 flex items-center justify-center mb-4"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <MailCheck className="h-7 w-7 text-violet-500" />
+                </motion.div>
                 <h2 className="font-serif text-3xl font-bold">
-                  Check Your Email
+                  Spell Sent!
                 </h2>
                 <p className="text-default-500 text-sm">
-                  We&apos;ve sent password reset instructions to your email
-                  address.
+                  We&apos;ve sent a magical reset link to your email address.
                 </p>
               </CardHeader>
               <CardBody>
                 <p className="text-sm text-default-500 mb-6">
-                  If you registered using your email and password, you will
-                  receive a password reset email shortly.
+                  Check your inbox for the password reset enchantment. It should
+                  arrive shortly.
                 </p>
-                <Button
-                  as={Link}
-                  href="/auth/login"
-                  variant="bordered"
-                  className="w-full"
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  Back to Login
-                </Button>
+                  <Button
+                    as={Link}
+                    href="/auth/login"
+                    variant="bordered"
+                    className="w-full border-violet-500/30 text-violet-600 dark:text-violet-400"
+                    size="lg"
+                    startContent={<ArrowLeft className="h-4 w-4" />}
+                  >
+                    Back to Login
+                  </Button>
+                </motion.div>
               </CardBody>
             </Card>
           ) : (
-            <Card shadow="lg" className="border-none">
-              <CardHeader className="flex flex-col gap-1 pb-0">
+            <Card shadow="lg" className="border-none border border-violet-500/10">
+              <CardHeader className="flex flex-col gap-1 px-6 pt-6 pb-0">
                 <div className="flex items-center justify-between w-full">
-                  <h2 className="font-serif text-3xl font-bold tracking-tight">
-                    Reset Password
-                  </h2>
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-violet-500 animate-twinkle" />
+                    <h2 className="font-serif text-3xl font-bold tracking-tight">
+                      Reset Password
+                    </h2>
+                  </div>
                   <Button
                     as={Link}
                     href="/auth/login"
@@ -119,11 +137,11 @@ export function ForgotPasswordForm({
                   </Button>
                 </div>
                 <p className="text-default-500 text-sm">
-                  Enter your email address and we&apos;ll send you a link to
-                  reset your password
+                  Enter your email and we&apos;ll send a magical link to restore
+                  your access
                 </p>
               </CardHeader>
-              <CardBody>
+              <CardBody className="px-6 pb-6">
                 <form onSubmit={handleForgotPassword} className="space-y-4">
                   <Input
                     label="Email Address"
@@ -139,20 +157,30 @@ export function ForgotPasswordForm({
                       {error}
                     </div>
                   )}
-                  <Button
-                    type="submit"
-                    color="primary"
-                    className="w-full"
-                    isLoading={isLoading}
-                    spinner={<Loader2 className="h-4 w-4 animate-spin" />}
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {isLoading ? "Sending link..." : "Send Reset Link"}
-                  </Button>
+                    <Button
+                      type="submit"
+                      className="w-full magic-gradient-bg text-white magic-glow-sm"
+                      size="lg"
+                      isLoading={isLoading}
+                      spinner={<Loader2 className="h-4 w-4 animate-spin" />}
+                      startContent={
+                        !isLoading ? (
+                          <Wand2 className="h-4 w-4" />
+                        ) : undefined
+                      }
+                    >
+                      {isLoading ? "Casting spell..." : "Send Reset Link"}
+                    </Button>
+                  </motion.div>
                   <div className="text-center text-sm">
                     Remember your password?{" "}
                     <Link
                       href="/auth/login"
-                      className="font-medium text-primary hover:underline underline-offset-4"
+                      className="font-medium text-violet-500 hover:text-violet-600 hover:underline underline-offset-4"
                     >
                       Sign in
                     </Link>

@@ -6,7 +6,7 @@ import { Card, CardBody, CardHeader, Input, Button } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Loader2, WalletCards, ArrowLeft } from "lucide-react";
+import { Loader2, Wand2, Sparkles, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
 const container = {
@@ -78,18 +78,26 @@ export function SignUpForm({
             href="/"
             className="flex items-center gap-2 font-serif font-bold text-2xl mb-4 group"
           >
-            <WalletCards className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
+            <motion.span
+              animate={{ rotate: [0, 15, -5, 10, 0], scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Wand2 className="h-8 w-8 text-violet-500 transition-transform group-hover:scale-110" />
+            </motion.span>
             FinSight
           </Link>
         </motion.div>
 
         <motion.div variants={item}>
-          <Card shadow="lg" className="border-none">
-            <CardHeader className="flex flex-col gap-1 pb-0">
+          <Card shadow="lg" className="border-none border border-violet-500/10">
+            <CardHeader className="flex flex-col gap-1 px-6 pt-6 pb-0">
               <div className="flex items-center justify-between w-full">
-                <h2 className="font-serif text-3xl font-bold tracking-tight">
-                  Create an account
-                </h2>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-violet-500 animate-twinkle" />
+                  <h2 className="font-serif text-3xl font-bold tracking-tight">
+                    Begin Your Journey
+                  </h2>
+                </div>
                 <Button
                   as={Link}
                   href="/"
@@ -102,10 +110,10 @@ export function SignUpForm({
                 </Button>
               </div>
               <p className="text-default-500 text-sm">
-                Enter your email and create a password to get started
+                Create an account to unlock your magical financial powers
               </p>
             </CardHeader>
-            <CardBody>
+            <CardBody className="px-6 pb-6">
               <form onSubmit={handleSignUp} className="space-y-4">
                 <Input
                   label="Email"
@@ -137,20 +145,30 @@ export function SignUpForm({
                     {error}
                   </div>
                 )}
-                <Button
-                  type="submit"
-                  color="primary"
-                  className="w-full"
-                  isLoading={isLoading}
-                  spinner={<Loader2 className="h-4 w-4 animate-spin" />}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  {isLoading ? "Creating account..." : "Create Account"}
-                </Button>
+                  <Button
+                    type="submit"
+                    className="w-full magic-gradient-bg text-white magic-glow-sm"
+                    size="lg"
+                    isLoading={isLoading}
+                    spinner={<Loader2 className="h-4 w-4 animate-spin" />}
+                    startContent={
+                      !isLoading ? (
+                        <Wand2 className="h-4 w-4" />
+                      ) : undefined
+                    }
+                  >
+                    {isLoading ? "Conjuring account..." : "Create Account"}
+                  </Button>
+                </motion.div>
                 <div className="text-center text-sm">
                   Already have an account?{" "}
                   <Link
                     href="/auth/login"
-                    className="font-medium text-primary hover:underline underline-offset-4"
+                    className="font-medium text-violet-500 hover:text-violet-600 hover:underline underline-offset-4"
                   >
                     Sign in
                   </Link>
